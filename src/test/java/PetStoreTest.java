@@ -28,7 +28,7 @@ public class PetStoreTest {
     }
 
     @Test
-    public void getPetByStatus() {
+    public void getPetByStatusTest() {
         int petId = 2;
 
         for (Status status : Status.values()) {
@@ -42,4 +42,19 @@ public class PetStoreTest {
                     .statusCode(200);
         }
     }
+
+    @Test
+    public void deletePetByIdTest() {
+        int petId = 1448;
+
+        ValidatableResponse response = RestAssured.given()
+//              .basePath()
+                .log().uri()
+                .delete(Config.DELETE_PET_BY_ID, petId)
+                .then()
+                .log().all()
+                .statusCode(200);
+
+    }
+
 }
