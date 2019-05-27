@@ -1,3 +1,8 @@
+package PetStore;
+
+import PetStore.models.CategoryModel;
+import PetStore.models.PetModel;
+import PetStore.models.TagModel;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Test;
@@ -16,7 +21,7 @@ public class PetStoreTest {
 
     @Test
     public void getPetByIdTest(){
-        int petId = 2;
+        int petId = 1448;
 
         ValidatableResponse response = RestAssured.given()
 //              .basePath()
@@ -29,8 +34,6 @@ public class PetStoreTest {
 
     @Test
     public void getPetByStatusTest() {
-        int petId = 2;
-
         for (Status status : Status.values()) {
             ValidatableResponse response = RestAssured.given()
 //                .basePath()
@@ -54,7 +57,32 @@ public class PetStoreTest {
                 .then()
                 .log().all()
                 .statusCode(200);
-
     }
+
+    @Test
+    public void createPetTest() {
+
+        PetModel petModel = new PetModel(
+                1448,
+                new CategoryModel(1448, "зверь"),
+                "Обезьяна",
+                new String[]{"string"},
+                new TagModel[]{new TagModel()},
+                "available"
+        );
+
+        ValidatableResponse response = RestAssured.given()
+//                .basePath()
+                .log().uri()
+                .header("Content-Type", "application/json")
+                .header("accept", "application/xml")
+//                .contentType("application/json")
+                .body(petModel)
+                .post(Config.CREATE_PET)
+                .then()
+                .log().all()
+                .statusCode(200);
+    }
+
 
 }
