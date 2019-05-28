@@ -15,14 +15,14 @@ public class PetStoreTest {
         SOLD
     }
 
+    private int petId = 1448;
+
     static {
         RestAssured.baseURI = Config.BASE_URI;
     }
 
     @Test
     public void getPetByIdTest(){
-        int petId = 1448;
-
         ValidatableResponse response = RestAssured.given()
 //              .basePath()
                 .log().uri()
@@ -48,8 +48,6 @@ public class PetStoreTest {
 
     @Test
     public void deletePetByIdTest() {
-        int petId = 1448;
-
         ValidatableResponse response = RestAssured.given()
 //              .basePath()
                 .log().uri()
@@ -61,10 +59,9 @@ public class PetStoreTest {
 
     @Test
     public void createPetTest() {
-
         PetModel petModel = new PetModel(
-                1448,
-                new CategoryModel(1448, "зверь"),
+                petId,
+                new CategoryModel(petId, "зверь"),
                 "Обезьяна",
                 new String[]{"string"},
                 new TagModel[]{new TagModel()},
@@ -75,13 +72,43 @@ public class PetStoreTest {
 //                .basePath()
                 .log().uri()
                 .header("Content-Type", "application/json")
-                .header("accept", "application/xml")
+                .header("accept", "application/json")
 //                .contentType("application/json")
                 .body(petModel)
                 .post(Config.CREATE_PET)
                 .then()
                 .log().all()
                 .statusCode(200);
+    }
+
+    @Test
+    public void updatePetTest(){
+
+        createPetTest();
+
+        PetModel petModel = new PetModel(
+                petId,
+                new CategoryModel(petId, "хищник"),
+                "Горилла",
+                new String[]{"path_to_photo"},
+                new TagModel[]{new TagModel()},
+                "unavailable"
+        );
+
+        ValidatableResponse response = RestAssured.given()
+//                .basePath()
+                .log().uri()
+                .header("Content-Type", "application/json")
+                .header("accept", "application/json")
+//                .contentType("application/json")
+                .body(petModel)
+                .put(Config.UPDATE_PET)
+                .then()
+                .log().all()
+                .statusCode(200);
+
+        getPetByIdTest();
+        deletePetByIdTest();
     }
 
 
