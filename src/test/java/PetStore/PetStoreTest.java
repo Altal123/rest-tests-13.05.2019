@@ -5,7 +5,11 @@ import PetStore.models.PetModel;
 import PetStore.models.TagModel;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
 
 public class PetStoreTest {
 
@@ -16,6 +20,8 @@ public class PetStoreTest {
     }
 
     private int petId = 1448;
+    private String name = "Макака";
+    private String status = "available";
 
     static {
         RestAssured.baseURI = Config.BASE_URI;
@@ -23,13 +29,17 @@ public class PetStoreTest {
 
     @Test
     public void getPetByIdTest(){
+        System.out.println("!!!!!!GET PET BY ID!!!!!!");
         ValidatableResponse response = RestAssured.given()
 //              .basePath()
-                .log().uri()
+//                .log().uri()
                 .get(Config.GET_PET_BY_ID, petId)
                 .then()
-                .log().all()
-                .statusCode(200);
+                .log().body()
+                .statusCode(200)
+                .body("id", is (petId))
+                .body("name", is (name))
+                .body("status", is (status));
     }
 
     @Test
@@ -46,70 +56,72 @@ public class PetStoreTest {
         }
     }
 
-    @Test
-    public void deletePetByIdTest() {
-        ValidatableResponse response = RestAssured.given()
-//              .basePath()
-                .log().uri()
-                .delete(Config.DELETE_PET_BY_ID, petId)
-                .then()
-                .log().all()
-                .statusCode(200);
-    }
-
-    @Test
+    @Before
     public void createPetTest() {
-        PetModel petModel = new PetModel(
-                petId,
-                new CategoryModel(petId, "зверь"),
-                "Обезьяна",
-                new String[]{"string"},
-                new TagModel[]{new TagModel()},
-                "available"
-        );
+        System.out.println("!!!!!!CREATE NEW PET!!!!!!");
+        PetModel petModel = getPetModel();
 
         ValidatableResponse response = RestAssured.given()
 //                .basePath()
-                .log().uri()
+//                .log().uri()
                 .header("Content-Type", "application/json")
                 .header("accept", "application/json")
 //                .contentType("application/json")
                 .body(petModel)
                 .post(Config.CREATE_PET)
                 .then()
-                .log().all()
+//                .log().all()
                 .statusCode(200);
+
+        getPetByIdTest();
     }
+
 
     @Test
     public void updatePetTest(){
+        System.out.println("!!!!!!UPDATE EXISTING PET!!!!!!");
 
-        createPetTest();
-
-        PetModel petModel = new PetModel(
-                petId,
-                new CategoryModel(petId, "хищник"),
-                "Горилла",
-                new String[]{"path_to_photo"},
-                new TagModel[]{new TagModel()},
-                "unavailable"
-        );
+        name = "Шимпанзе";
+        status = "unavailable";
+        PetModel petModel = getPetModel();
 
         ValidatableResponse response = RestAssured.given()
 //                .basePath()
-                .log().uri()
+//                .log().uri()
                 .header("Content-Type", "application/json")
                 .header("accept", "application/json")
 //                .contentType("application/json")
                 .body(petModel)
                 .put(Config.UPDATE_PET)
                 .then()
-                .log().all()
+//                .log().all()
                 .statusCode(200);
 
         getPetByIdTest();
-        deletePetByIdTest();
+
     }
 
+    @After
+    public void deletePetByIdTest() {
+        System.out.println("!!!!!!DELETE PET!!!!!!");
+        ValidatableResponse response = RestAssured.given()
+//              .basePath()
+//                .log().uri()
+                .delete(Config.DELETE_PET_BY_ID, petId)
+                .then()
+//                .log().all()
+                .statusCode(200);
+    }
+
+    private PetModel getPetModel() {
+        return new PetModel(
+                petId,
+                new CategoryModel(petId, "млекопитающие"),
+                name,
+                new String[]{"string"},
+                new TagModel[]{new TagModel()},
+                status
+        );
+    }
 
 }
