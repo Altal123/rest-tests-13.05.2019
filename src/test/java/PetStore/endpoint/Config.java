@@ -1,4 +1,4 @@
-package PetStore;
+package PetStore.endpoint;
 
 public class Config {
 
