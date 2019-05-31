@@ -8,4 +8,8 @@ public class Config {
     final static String GET_PET_BY_ID = "pet/{petId}";
     final static String GET_PET_BY_STATUS = "pet/findByStatus";
     final static String DELETE_PET_BY_ID = "pet/{petId}";
+
+    final static String PLACE_ORDER = "store/order";
+    final static String GET_ORDER_BY_ID = "store/order/{orderId}";
+    final static String DELETE_ORDER_BY_ID = "store/order/{orderId}";
 }
