@@ -13,8 +13,8 @@ public class StoreEndPoint {
         return given()
                 .body(storeModel)
                 .post(Config.PLACE_ORDER)
-                .then()
-                .log().all();
+                .then();
+//                .log().all();
     }
 
     public ValidatableResponse getOrderByID(int orderId){
@@ -26,17 +26,17 @@ public class StoreEndPoint {
     }
 
     public ValidatableResponse deleteOrderById(int orderId){
-        System.out.println("!!!!!!DELETE ODER BY ID!!!!!!");
+        System.out.println("!!!!!!DELETE ORDER BY ID!!!!!!");
         return given()
                 .delete(Config.DELETE_ORDER_BY_ID, orderId)
-                .then()
-                .log().all();
+                .then();
+//                .log().all();
     }
 
     private RequestSpecification given(){
         return RestAssured.given()
                 .baseUri(Config.BASE_URI)
-                .contentType("application/json")
-                .log().uri();
+                .contentType("application/json");
+//                .log().uri();
     }
 }
