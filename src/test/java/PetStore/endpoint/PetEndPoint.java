@@ -1,13 +1,17 @@
 package PetStore.endpoint;
 
 import PetStore.models.PetModel;
-import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-
-import static org.hamcrest.CoreMatchers.is;
+import net.serenitybdd.rest.SerenityRest;
+import net.thucydides.core.annotations.Step;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import java.util.logging.Logger;
 
 public class PetEndPoint {
+//    Logger logger = Logger.getLogger(this.getClass().getName());      //java.util.logging.Logger;
+    Logger logger = LoggerFactory.getLogger(this.getClass().getName()); //org.slf4j.Logger;
 
     public enum Status{
         AVAILABLE,
@@ -15,53 +19,60 @@ public class PetEndPoint {
         SOLD
     }
 
+    @Step
     public ValidatableResponse getPetById(int petId) {
+        logger.info("!!!!!!GET PET BY ID!!!!!!");
         return given()
                 .get(Config.GET_PET_BY_ID, petId)
-                .then()
-                .log().all();
+                .then();
+//                .log().all();
 //                .statusCode(200);
 //                .body("id", is (petId))
 //                .body("name", is (name))
 //                .body("status", is (status));
     }
 
+    @Step
     public ValidatableResponse getPetByStatus(Status status) {
         return given()
                 .param("status", status)
-                .log().uri()
+//                .log().uri()
                 .get(Config.GET_PET_BY_STATUS)
-                .then()
-                .log().all();
+                .then();
+//                .log().all();
     }
 
+    @Step
     public ValidatableResponse createPet(PetModel petModel){
         return given()
                 .body(petModel)
                 .post(Config.CREATE_PET)
-                .then()
-                .log().all();
+                .then();
+//                .log().all();
     }
 
+    @Step
     public ValidatableResponse updatePet(PetModel petModel){
         return given()
                 .body(petModel)
                 .put(Config.UPDATE_PET)
-                .then()
-                .log().all();
+                .then();
+//                .log().all();
     }
 
+    @Step
     public ValidatableResponse deletePetById(int petId){
         return given()
                 .delete(Config.DELETE_PET_BY_ID, petId)
-                .then()
-                .log().all();
+                .then();
+//                .log().all();
     }
 
     private RequestSpecification given(){
-        return RestAssured.given()
+        SerenityRest.enableLoggingOfRequestAndResponseIfValidationFails();
+        return SerenityRest.given()
                 .baseUri(Config.BASE_URI)
-                .contentType("application/json")
-                .log().uri();
+                .contentType("application/json");
+//                .log().uri();
     }
 }

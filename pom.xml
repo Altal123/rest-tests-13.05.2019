@@ -10,10 +10,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>4.0.0</version>
-            <scope>test</scope>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-rest-assured</artifactId>
+            <version>2.0.50</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -21,15 +20,25 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+
+        <!--For JavaObj to JSON serialization-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.9.9</version>
         </dependency>
+
+        <!--To enable default Serenity logging-->
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.14.3</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.26</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-junit</artifactId>
+            <version>2.0.50</version>
         </dependency>
     </dependencies>
 </project>

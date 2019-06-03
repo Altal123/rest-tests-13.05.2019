@@ -4,21 +4,25 @@ import PetStore.endpoint.PetEndPoint;
 import PetStore.models.CategoryModel;
 import PetStore.models.PetModel;
 import PetStore.models.TagModel;
+import net.serenitybdd.junit.runners.SerenityRunner;
+import net.thucydides.core.annotations.Steps;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static PetStore.endpoint.PetEndPoint.*;
 
+@RunWith(SerenityRunner.class)
 public class PetStoreTest {
 
     private int petId = 1448;
     private String name = "Макака";
     private String status = "available";
-    private PetEndPoint petEndPoint = new PetEndPoint();
 
+    @Steps
+    private PetEndPoint petEndPoint = new PetEndPoint();
 
     @Test
     public void getPetByIdTest(){
-        System.out.println("!!!!!!GET PET BY ID!!!!!!");
         petEndPoint
                 .getPetById(1448)
                 .statusCode(200);

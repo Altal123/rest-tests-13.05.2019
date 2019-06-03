@@ -4,13 +4,19 @@ import PetStore.endpoint.PetEndPoint;
 import PetStore.models.CategoryModel;
 import PetStore.models.PetModel;
 import PetStore.models.TagModel;
+import net.serenitybdd.junit.runners.SerenityRunner;
+import net.thucydides.core.annotations.Steps;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+@RunWith(SerenityRunner.class)
 public class PetUpdateTest {
 
     private PetModel petModel;
+
+    @Steps
     private PetEndPoint petEndPoint = new PetEndPoint();
 
     @Before

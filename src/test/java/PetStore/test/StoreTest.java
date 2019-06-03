@@ -2,18 +2,26 @@ package PetStore.test;
 
 import PetStore.endpoint.StoreEndPoint;
 import PetStore.models.StoreModel;
-import org.testng.annotations.*;
+import net.serenitybdd.junit.runners.SerenityRunner;
+import net.thucydides.core.annotations.Steps;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 
+@RunWith(SerenityRunner.class)
 public class StoreTest {
 
+
     private StoreModel storeModel;
+
+    @Steps
     private StoreEndPoint storeEndPoint = new StoreEndPoint();
 
-    @BeforeTest
+    @Test
     public void placeOrderTest(){
         storeModel = new StoreModel(
                 11,
@@ -39,7 +47,7 @@ public class StoreTest {
                 .body("status", is ("placed"));
     }
 
-    @AfterTest
+    @Test
     public void deleteOrderById(){
         storeEndPoint
                 .deleteOrderById(11)
