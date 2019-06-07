@@ -5,12 +5,15 @@ import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StoreEndPoint {
+    Logger logger = LoggerFactory.getLogger(this.getClass().getName()); //org.slf4j.Logger;
 
     @Step
     public ValidatableResponse placeOrder(StoreModel storeModel){
-        System.out.println("!!!!!!PLACE NEW ODER!!!!!!");
+        logger.info("!!!!!!PLACE NEW ODER!!!!!!");
         return given()
                 .body(storeModel)
                 .post(Config.PLACE_ORDER)
@@ -20,7 +23,7 @@ public class StoreEndPoint {
 
     @Step
     public ValidatableResponse getOrderByID(int orderId){
-        System.out.println("!!!!!!GET ODER BY ID!!!!!!");
+        logger.info("!!!!!!GET ODER BY ID!!!!!!");
         return given()
                 .get(Config.GET_ORDER_BY_ID, orderId)
                 .then()
@@ -29,7 +32,7 @@ public class StoreEndPoint {
 
     @Step
     public ValidatableResponse deleteOrderById(int orderId){
-        System.out.println("!!!!!!DELETE ORDER BY ID!!!!!!");
+        logger.info("!!!!!!DELETE ORDER BY ID!!!!!!");
         return given()
                 .delete(Config.DELETE_ORDER_BY_ID, orderId)
                 .then();

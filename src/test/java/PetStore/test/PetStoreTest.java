@@ -19,7 +19,7 @@ public class PetStoreTest {
     private String status = "available";
 
     @Steps
-    private PetEndPoint petEndPoint = new PetEndPoint();
+    private PetEndPoint petEndPoint;// = new PetEndPoint();
 
     @Test
     public void getPetByIdTest(){

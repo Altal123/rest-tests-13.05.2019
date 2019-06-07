@@ -17,7 +17,7 @@ public class PetUpdateTest {
     private PetModel petModel;
 
     @Steps
-    private PetEndPoint petEndPoint = new PetEndPoint();
+    private PetEndPoint petEndPoint;// = new PetEndPoint(); можно закомментить т.к. @Steps уже создает єтот обьект
 
     @Before
     public void precondition(){
@@ -46,7 +46,7 @@ public class PetUpdateTest {
                 .statusCode(200);
         petEndPoint
                 .getPetById(petModel.getId())
-                .statusCode(200);
+                .statusCode(400);
     }
 
     @After

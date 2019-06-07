@@ -44,6 +44,7 @@ public class PetEndPoint {
 
     @Step
     public ValidatableResponse createPet(PetModel petModel){
+        logger.info("!!!!!!CREATE PET !!!!!!");
         return given()
                 .body(petModel)
                 .post(Config.CREATE_PET)
@@ -53,6 +54,7 @@ public class PetEndPoint {
 
     @Step
     public ValidatableResponse updatePet(PetModel petModel){
+        logger.info("!!!!!!UPDATE PET !!!!!!");
         return given()
                 .body(petModel)
                 .put(Config.UPDATE_PET)
@@ -62,6 +64,7 @@ public class PetEndPoint {
 
     @Step
     public ValidatableResponse deletePetById(int petId){
+        logger.info("!!!!!!DELETE PET BY ID!!!!!!");
         return given()
                 .delete(Config.DELETE_PET_BY_ID, petId)
                 .then();
