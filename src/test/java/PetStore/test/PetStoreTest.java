@@ -6,16 +6,21 @@ import PetStore.models.PetModel;
 import PetStore.models.TagModel;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
+import net.thucydides.junit.annotations.TestData;
+import net.thucydides.junit.runners.ThucydidesParameterizedRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import static PetStore.endpoint.PetEndPoint.*;
 
-@RunWith(SerenityRunner.class)
+@RunWith(ThucydidesParameterizedRunner.class)
 public class PetStoreTest {
 
-    private int petId = 1448;
-    private String name = "Макака";
+    private int petId;
+    private String name;
     private String status = "available";
 
     @Steps
@@ -39,16 +44,17 @@ public class PetStoreTest {
 
     @Test
     public void createPetTest() {
-        System.out.println("!!!!!!CREATE NEW PET!!!!!!");
         PetModel petModel = getPetModel();
         petEndPoint
-                .createPet(petModel)
+                .createPet(petModel);
+
+        petEndPoint
+                .getPetById(1448)
                 .statusCode(200);
     }
 
     @Test
     public void updatePetTest(){
-        System.out.println("!!!!!!UPDATE EXISTING PET!!!!!!");
         name = "Шимпанзе";
         status = "unavailable";
         PetModel petModel = getPetModel();
@@ -74,7 +80,6 @@ public class PetStoreTest {
 
     @Test
     public void deletePetByIdTest() {
-        System.out.println("!!!!!!DELETE PET!!!!!!");
         petEndPoint
                 .deletePetById(petId)
                 .statusCode(200);
@@ -96,6 +101,15 @@ public class PetStoreTest {
                 new TagModel[]{new TagModel()},
                 status
         );
+    }
+
+    @TestData
+    public static Collection<Object[]> testData() {
+        return Arrays.asList(new Object[][]{
+                {1448, "Макака"},
+                {-1, "Terminator"},
+                {???, "___"},
+        });
     }
 
 }
