@@ -21,14 +21,14 @@ public class PetModel {
 //            "  \"status\": \"available\"\n" +
 //            "}"
 
-    private int id;
+    private String id;
     private CategoryModel category;
     private String name;
     private String[] photoUrls;
     private TagModel[] tags;
     private String status;
 
-    public PetModel(int id, CategoryModel category, String name, String[] photoUrls, TagModel[] tags, String status) {
+    public PetModel(String id, CategoryModel category, String name, String[] photoUrls, TagModel[] tags, String status) {
         this.id = id;
         this.category = category;
         this.name = name;
@@ -37,7 +37,7 @@ public class PetModel {
         this.status = status;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -61,7 +61,7 @@ public class PetModel {
         return status;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -7,7 +7,6 @@ import PetStore.models.TagModel;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.junit.annotations.TestData;
-import net.thucydides.junit.runners.ThucydidesParameterizedRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -16,12 +15,11 @@ import java.util.Collection;
 
 import static PetStore.endpoint.PetEndPoint.*;
 
-@RunWith(ThucydidesParameterizedRunner.class)
+@RunWith(SerenityRunner.class)
 public class PetStoreTest {
 
-    private int petId;
-    private String name;
-    private String status = "available";
+    private String petId = "1448";
+    private String name = "Мавпенятко";
 
     @Steps
     private PetEndPoint petEndPoint;// = new PetEndPoint();
@@ -29,7 +27,7 @@ public class PetStoreTest {
     @Test
     public void getPetByIdTest(){
         petEndPoint
-                .getPetById(1448)
+                .getPetById("1448")
                 .statusCode(200);
     }
 
@@ -47,35 +45,17 @@ public class PetStoreTest {
         PetModel petModel = getPetModel();
         petEndPoint
                 .createPet(petModel);
-
-        petEndPoint
-                .getPetById(1448)
-                .statusCode(200);
     }
+
 
     @Test
     public void updatePetTest(){
         name = "Шимпанзе";
-        status = "unavailable";
         PetModel petModel = getPetModel();
 
         petEndPoint
                 .updatePet(petModel)
                 .statusCode(200);
-
-       /* ValidatableResponse response = RestAssured.given()
-//                .basePath()
-//                .log().uri()
-                .header("Content-Type", "application/json")
-                .header("accept", "application/json")
-//                .contentType("application/json")
-                .body(petModel)
-                .put(Config.UPDATE_PET)
-                .then()
-//                .log().all()
-                .statusCode(200);*/
-
-//        getPetByIdTest();
     }
 
     @Test
@@ -99,17 +79,7 @@ public class PetStoreTest {
                 name,
                 new String[]{"string"},
                 new TagModel[]{new TagModel()},
-                status
+                "available"
         );
     }
-
-    @TestData
-    public static Collection<Object[]> testData() {
-        return Arrays.asList(new Object[][]{
-                {1448, "Макака"},
-                {-1, "Terminator"},
-                {???, "___"},
-        });
-    }
-
 }

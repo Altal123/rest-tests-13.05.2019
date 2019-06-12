@@ -20,7 +20,7 @@ public class PetEndPoint {
     }
 
     @Step
-    public ValidatableResponse getPetById(int petId) {
+    public ValidatableResponse getPetById(String petId) {
         logger.info("!!!!!!GET PET BY ID!!!!!!");
         return given()
                 .get(Config.GET_PET_BY_ID, petId)
@@ -44,12 +44,12 @@ public class PetEndPoint {
 
     @Step
     public ValidatableResponse createPet(PetModel petModel){
-        logger.info("!!!!!!CREATE PET !!!!!!");
+        logger.info("!!!!!!CREATE PET: " + petModel.getName() + "!!!!!!");
         return given()
                 .body(petModel)
                 .post(Config.CREATE_PET)
-                .then();
-//                .log().all();
+                .then()
+                .log().all();
     }
 
     @Step
@@ -58,12 +58,12 @@ public class PetEndPoint {
         return given()
                 .body(petModel)
                 .put(Config.UPDATE_PET)
-                .then();
-//                .log().all();
+                .then()
+                .log().all();
     }
 
     @Step
-    public ValidatableResponse deletePetById(int petId){
+    public ValidatableResponse deletePetById(String petId){
         logger.info("!!!!!!DELETE PET BY ID!!!!!!");
         return given()
                 .delete(Config.DELETE_PET_BY_ID, petId)

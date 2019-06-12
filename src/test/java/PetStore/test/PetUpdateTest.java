@@ -23,8 +23,8 @@ public class PetUpdateTest {
     public void precondition(){
         System.out.println("!!!!!!CREATE EXISTING PET!!!!!!");
         petModel = new PetModel(
-                1448,
-                new CategoryModel(1448, "млекопитающие"),
+                "1448",
+                new CategoryModel("1448", "млекопитающие"),
                 "Макака",
                 new String[]{"string"},
                 new TagModel[]{new TagModel()},

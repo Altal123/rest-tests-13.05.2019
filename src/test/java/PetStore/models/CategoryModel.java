@@ -1,15 +1,15 @@
 package PetStore.models;
 
 public class CategoryModel {
-    private int id;
+    private String id;
     private String name;
 
-    public CategoryModel(int id, String categoryName) {
+    public CategoryModel(String id, String categoryName) {
         this.id = id;
         this.name = categoryName;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
