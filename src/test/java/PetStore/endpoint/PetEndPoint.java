@@ -48,8 +48,8 @@ public class PetEndPoint {
         return given()
                 .body(petModel)
                 .post(Config.CREATE_PET)
-                .then()
-                .log().all();
+                .then();
+//                .log().all();
     }
 
     @Step
@@ -58,8 +58,8 @@ public class PetEndPoint {
         return given()
                 .body(petModel)
                 .put(Config.UPDATE_PET)
-                .then()
-                .log().all();
+                .then();
+//                .log().all();
     }
 
     @Step

@@ -3,10 +3,11 @@
 1. You should add Serenity annotation @RunWith(SerenityRunner.class) above !test! class.
    It let you run the JUnit test using the Serenity test runner.
 
-2. Add @Steps annotation marks a Serenity step library, above the instance test page class.
+2. Add @Steps annotation marks a Serenity step library, above the instance test page class. Also using this 
+   annotation together with annotation @RunWith(SerenityRunner.class) let you do not create an instanse test page class (for example PetEndPoint petEndPoint = new PetEndPoint()) because it will be created automatically. So in this case will be enough to write: PetEndPoint petEndPoint; with annotation @Steps above.
 
 3. The unit test is composed of logical steps, each of which will appear in the reports.
-   That`s why you should place annotations @Step above  methods you use of test page class.
+   That is why you should place annotations @Step above  methods you use of test page class.
    The @Step annotation marks this as a method that will be recorded and will appear in the test report.
 
 4. You should add several dependencies into pom-file:
