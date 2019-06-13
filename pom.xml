@@ -12,6 +12,7 @@
         <serenity.version>2.0.50</serenity.version>
         <jackson.databind.version>2.9.9</jackson.databind.version>
         <surefire.version>2.20</surefire.version>
+        <test.name>*</test.name>
     </properties>
 
     <dependencies>
@@ -70,6 +71,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
                 <configuration>
+                    <includes>
+                        <!--Здесь добавлем все классы (т.к. test.name = *) в папке test-->
+                        <include>**/test/**/${test.name}.java</include>
+                    </includes>
                     <testFailureIgnore>true</testFailureIgnore> <!--for ignoring failed tests-->
                     <skip>false</skip>
                 </configuration>
