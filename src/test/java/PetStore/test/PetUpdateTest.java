@@ -6,25 +6,28 @@ import PetStore.models.PetModel;
 import PetStore.models.TagModel;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
+import net.thucydides.junit.annotations.Concurrent;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+@Concurrent
 @RunWith(SerenityRunner.class)
 public class PetUpdateTest {
 
     private PetModel petModel;
+    private String petId = "1448";
 
     @Steps
     private PetEndPoint petEndPoint;// = new PetEndPoint(); можно закомментить т.к. @Steps уже создает єтот обьект
 
     @Before
     public void precondition(){
-        System.out.println("!!!!!!CREATE EXISTING PET!!!!!!");
         petModel = new PetModel(
-                "1448",
-                new CategoryModel("1448", "млекопитающие"),
+                petId,
+                new CategoryModel(petId, "млекопитающие"),
                 "Макака",
                 new String[]{"string"},
                 new TagModel[]{new TagModel()},
@@ -36,22 +39,27 @@ public class PetUpdateTest {
     }
 
     @Test
+    public void uploadImageOfPet() {
+        petEndPoint
+                .uploadImageOfPet(petId, "Butterly.JPG")
+                .statusCode(200);
+    }
+
+    @Test
     public void updatePetTest(){
-        System.out.println("!!!!!!UPDATE EXISTING PET!!!!!!");
         petModel.setName("Шимпанзе");
         petModel.setStatus("unavailable");
 
         petEndPoint
                 .updatePet(petModel)
                 .statusCode(200);
-        petEndPoint
-                .getPetById(petModel.getId())
-                .statusCode(400);
     }
 
     @After
     public void postcondition(){
-        System.out.println("!!!!!!DELETE PET!!!!!!");
+        petEndPoint
+                .getPetById(petModel.getId())
+                .statusCode(200);
         petEndPoint
                 .deletePetById(petModel.getId())
                 .statusCode(200);

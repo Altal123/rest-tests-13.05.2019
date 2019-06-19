@@ -7,7 +7,10 @@ import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import java.util.logging.Logger;
+
+import java.io.File;
+
+import static org.hamcrest.Matchers.is;
 
 public class PetEndPoint {
 //    Logger logger = Logger.getLogger(this.getClass().getName());      //java.util.logging.Logger;
@@ -60,6 +63,21 @@ public class PetEndPoint {
                 .put(Config.UPDATE_PET)
                 .then();
 //                .log().all();
+    }
+
+    @Step
+    public ValidatableResponse uploadImageOfPet(String petId, String fileName){
+        logger.info("!!!!!!UPLOAD IMAGE OF PET!!!!!!");
+        return SerenityRest.given()
+                .baseUri(Config.BASE_URI)
+//                .accept("application/json")
+//                .contentType("multipart/form-data")
+                .multiPart(new File("D:\\" + fileName))
+                .multiPart("additionalMetadata", "data")
+                .post(Config.UPLOAD_IMAGE_PET, petId)
+                .then()
+                .body("code", is (200))
+                .log().all();
     }
 
     @Step

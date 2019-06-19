@@ -6,6 +6,7 @@ import PetStore.models.PetModel;
 import PetStore.models.TagModel;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.thucydides.core.annotations.Steps;
+import net.thucydides.junit.annotations.Concurrent;
 import net.thucydides.junit.annotations.TestData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.junit.runner.RunWith;
 import java.util.Arrays;
 import java.util.Collection;
 
+@Concurrent
 @RunWith(SerenityParameterizedRunner.class)
 public class PetCreateParameterizedTest {
 

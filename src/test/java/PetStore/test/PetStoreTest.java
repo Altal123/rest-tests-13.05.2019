@@ -6,15 +6,13 @@ import PetStore.models.PetModel;
 import PetStore.models.TagModel;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
-import net.thucydides.junit.annotations.TestData;
+import net.thucydides.junit.annotations.Concurrent;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import static PetStore.endpoint.PetEndPoint.*;
 
+@Concurrent
 @RunWith(SerenityRunner.class)
 public class PetStoreTest {
 
@@ -27,7 +25,7 @@ public class PetStoreTest {
     @Test
     public void getPetByIdTest(){
         petEndPoint
-                .getPetById("1448")
+                .getPetById(petId)
                 .statusCode(200);
     }
 
@@ -55,7 +53,7 @@ public class PetStoreTest {
 
         petEndPoint
                 .updatePet(petModel)
-                .statusCode(200);
+                .statusCode(400);
     }
 
     @Test

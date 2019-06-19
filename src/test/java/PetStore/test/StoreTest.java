@@ -4,6 +4,7 @@ import PetStore.endpoint.StoreEndPoint;
 import PetStore.models.StoreModel;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
+import net.thucydides.junit.annotations.Concurrent;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 
+@Concurrent
 @RunWith(SerenityRunner.class)
 public class StoreTest {
 
