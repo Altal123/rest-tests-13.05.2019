@@ -1,6 +1,7 @@
 package PetStore.endpoint;
 
 import PetStore.models.PetModel;
+import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import net.serenitybdd.rest.SerenityRest;
@@ -9,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-
-import static org.hamcrest.Matchers.is;
 
 public class PetEndPoint {
 //    Logger logger = Logger.getLogger(this.getClass().getName());      //java.util.logging.Logger;
@@ -66,17 +65,19 @@ public class PetEndPoint {
     }
 
     @Step
-    public ValidatableResponse uploadImageOfPet(String petId, String fileName){
+    public ValidatableResponse uploadImageOfPet(String petId, File file){
         logger.info("!!!!!!UPLOAD IMAGE OF PET!!!!!!");
-        return SerenityRest.given()
-                .baseUri(Config.BASE_URI)
-//                .accept("application/json")
-//                .contentType("multipart/form-data")
-                .multiPart(new File("D:\\" + fileName))
-                .multiPart("additionalMetadata", "data")
+        return  given()
+                .contentType("multipart/form-data")
+//                .multiPart(file)
+//                .multiPart("additionalMetadata", "data")
+                .multiPart(new MultiPartSpecBuilder(file)
+                          .fileName(file.getName())
+//                          .controlName("Pet Image")
+                          .build())
+                .formParam("additionalMetadata", "data")
                 .post(Config.UPLOAD_IMAGE_PET, petId)
                 .then()
-                .body("code", is (200))
                 .log().all();
     }
 

@@ -13,6 +13,11 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+
 @Concurrent
 @RunWith(SerenityRunner.class)
 public class PetUpdateTest {
@@ -40,9 +45,12 @@ public class PetUpdateTest {
 
     @Test
     public void uploadImageOfPet() {
+        File petImage  = new File(getClass().getClassLoader().getResource("Fesoj_-_Papilio_machaon_(by).jpg").getPath());
         petEndPoint
-                .uploadImageOfPet(petId, "Butterly.JPG")
-                .statusCode(200);
+                .uploadImageOfPet(petId, petImage)
+                .statusCode(200)
+                .body("code", is (200))
+                .body("message", containsString (petImage.getName()));
     }
 
     @Test

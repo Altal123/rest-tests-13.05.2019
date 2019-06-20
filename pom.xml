@@ -13,6 +13,7 @@
         <jackson.databind.version>2.9.9</jackson.databind.version>
         <surefire.version>2.20</surefire.version>
         <test.name>*</test.name>
+        <env>qa</env>
     </properties>
 
     <dependencies>
